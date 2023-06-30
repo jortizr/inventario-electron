@@ -1,0 +1,10 @@
+npm install --save-dev electron
+npm install --save-dev @electron-forge/cli
+npx electron-forge import
+
+
+
+npm run make
+
+> my-electron-app@1.0.0 make /my-electron-app
+> electron-forge make
