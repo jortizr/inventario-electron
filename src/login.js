@@ -8,14 +8,9 @@ loginForm.addEventListener("submit", async (e)=>{
         user: user.value,
         password: password.value
     }
-    console.log(!user.value === '');
+ 
     if(user.value != '' && password.value !=''){
-        const resp = await window.electronAPI.autheLogin(autentication);
-        console.log(resp);
-    }else{
-        alert("ingresa el usuario y contraseña")
-        user.focus();
+        await window.electronAPI.autheLogin(autentication);
     }
-    
 
 })
