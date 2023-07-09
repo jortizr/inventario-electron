@@ -1,0 +1,79 @@
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        data-bs-toggle="tab"
+        href="#"
+        aria-selected="true"
+        role="tab"
+        onclick="changeTab(event)"
+        >Inicio</a
+      >
+    </li>
+    <!-- menu desplegable -->
+    <li class="nav-item dropdown" >
+      <a
+        class="nav-link dropdown-toggle"
+        data-bs-toggle="dropdown"
+        href="./vistas/inventario.html"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="true"
+        onclick="changeTab(event)"
+        >Inventario</a
+      >
+      <div
+        class="dropdown-menu inv"
+        id="dropdown"
+        style="
+          position: absolute;
+          inset: 0px auto auto 0px;
+          margin: 0px;
+          transform: translate(0px, 42px);
+        "
+        data-popper-placement="bottom-start"
+      >
+        <a class="dropdown-item" href="./vistas/regional.html">Regionales</a>
+        <a class="dropdown-item" href="./vistas/operadores.html">Operador Movil</a>
+        <a class="dropdown-item" href="./vistas/equipos.html">Equipos</a>
+        <a class="dropdown-item" href="./vistas/colaboradores.html">Colaboradores</a>
+        <a class="dropdown-item" href="./vistas/usuarios.html">Usuarios</a>
+      </div>
+    </li>
+    <!-- tab configuracion -->
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        href="./vistas/configuracion.html"
+        aria-selected="false"
+        tabindex="-1"
+        role="tab"
+        onclick="changeTab(event)"
+        >Configuracion</a
+      >
+    </li>
+    <!-- Tab tutorial de uso -->
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle"
+        data-bs-toggle="dropdown"
+        href="./vistas/tutoriales.html"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        onclick="changeTab(event)"
+        >Tutorial</a
+      >
+      <div class="dropdown-menu tuto" id="dropdown">
+        <a class="dropdown-item" href="./vistas/tutoriales.html#DB">Creacion Base de datos</a>
+        <a class="dropdown-item" href="./vistas/tutoriales.html#Inv">Uso del inventario</a>
+        <a class="dropdown-item" href="./vistas/tutoriales.html#Registros">Registrar usuario y equipos</a>
+      </div>
+
+    </li>
+    <div class="card-login card">
+      <div>
+        <span id="user-name"></span>
+        <p class="job" id="user-rol"></p>
+      </div>
+      <button class="btn btn-outline-light">Salir</button>
+    </div>

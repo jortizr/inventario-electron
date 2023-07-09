@@ -1,6 +1,13 @@
 
 const tabContents = document.getElementsByClassName("tab-pane");
 const tabList = document.getElementsByClassName("nav-link");
+const listDrop = document.getElementsByClassName("dropdown-menu")
+const navInventario = document.getElementsByClassName("inv")
+const navTutorial = document.getElementsByClassName("tuto")
+
+
+const tabs = document.getElementById("tabs")
+
 
 //funcion para cambiar de tab
 function changeTab(tabs) {
@@ -22,3 +29,29 @@ function changeTab(tabs) {
     //activamos el contenido a visualizar
     section.classList.add("active", "show");
   }
+//funcion cuando el menu recibe el mouse y activar el desplegable
+  tabs.addEventListener("mouseover", (e)=>{
+    if(e.target.classList[1] === "dropdown-toggle"){
+      if(e.target.innerText === "Inventario"){
+        navInventario.dropdown.classList.add("show")
+      }
+      if(e.target.innerText === "Tutorial"){
+        navTutorial.dropdown.classList.add("show")
+      }
+    }
+    if(e.toElement.className == "nav-link" || e.toElement.className == "nav-link active"){
+      for (var i = 0; i < listDrop.length; i++) {
+       listDrop[i].classList.remove("show");
+      }
+    }
+  })
+//desactiva los menus desplegables al salir el mouse al contenedor html
+  tabContents.consulta.addEventListener("mouseout", (e)=>{
+      for (var i = 0; i < listDrop.length; i++) {
+       listDrop[i].classList.remove("show");
+      }
+  })
+
+
+
+

@@ -13,5 +13,6 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  autheLogin: (user) => ipcRenderer.invoke("autentication-login", user)
+  autheLogin: (user) => ipcRenderer.invoke("autentication-login", user),
+  sesion: ()=> ipcRenderer.invoke("data-user")
 })

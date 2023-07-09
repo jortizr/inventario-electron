@@ -1009,6 +1009,7 @@ progress {
     margin-left: 66.66666667%
 }
 
+
 .offset-9 {
     margin-left: 75%
 }
@@ -3129,6 +3130,10 @@ textarea.form-control-lg {
     z-index: 5
 }
 
+.align-txt-center{
+    text-align: center;
+}
+
 .input-group-text {
     display: flex;
     align-items: center;
@@ -3416,8 +3421,8 @@ textarea.form-control.is-invalid {
 }
 
 .btn {
-    --bs-btn-padding-x: 1.5rem;
-    --bs-btn-padding-y: 0.75rem;
+    --bs-btn-padding-x: 1.6rem;
+    --bs-btn-padding-y: 0.2rem;
     --bs-btn-font-family: ;
     --bs-btn-font-size: 1rem;
     --bs-btn-font-weight: 400;
@@ -3526,6 +3531,7 @@ fieldset:disabled .btn {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #e83283;
     --bs-btn-disabled-border-color: #e83283
+    
 }
 
 .btn-secondary {
@@ -14535,4 +14541,36 @@ body {
 
 .offcanvas .text-muted {
     color: rgba(255, 255, 255, .7) !important
+}
+
+/* card de login */
+.card-login {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-family: inherit;
+    width: auto;
+}
+
+.card-login span {
+    order:1;
+    margin-right: 10px;
+    margin-bottom: 1px;
+    font-weight: 600;
+    font-size: 1em;
+  }
+
+.card-login .job {
+    order: 2;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 0px;
+    font-size: 0.7em;
+  }
+.card-login button {
+    order: 3;
 }
