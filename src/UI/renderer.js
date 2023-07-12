@@ -4,9 +4,9 @@ const tabList = document.getElementsByClassName("nav-link");
 const listDrop = document.getElementsByClassName("dropdown-menu")
 const navInventario = document.getElementsByClassName("inv")
 const navTutorial = document.getElementsByClassName("tuto")
-
-
 const tabs = document.getElementById("tabs")
+
+
 
 
 //funcion para cambiar de tab
@@ -28,9 +28,10 @@ function changeTab(tabs) {
     const section = document.getElementById(tabs.target.hash.substring(1));
     //activamos el contenido a visualizar
     section.classList.add("active", "show");
+
   }
 //funcion cuando el menu recibe el mouse y activar el desplegable
-  tabs.addEventListener("mouseover", (e)=>{
+tabs.addEventListener("mouseover", (e)=>{
     if(e.target.classList[1] === "dropdown-toggle"){
       if(e.target.innerText === "Inventario"){
         navInventario.dropdown.classList.add("show")
@@ -53,5 +54,10 @@ function changeTab(tabs) {
   })
 
 
+async function dataSesion(){
+    const sesion = await window.electronAPI.sesion()
+    document.getElementById("user-name").textContent = sesion[0];
+    document.getElementById("user-rol").textContent = sesion[1];
+}
 
 

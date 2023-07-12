@@ -10,7 +10,92 @@
     <link rel="stylesheet" href="./bootstrap.min.css" />
   </head>
   <body>
-    <nav id="menu-container"></nav>
+    <header>
+      <nav id="menu-container">
+        <ul class="nav nav-tabs" role="tablist" id="tabs">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              data-bs-toggle="tab"
+              href="../admin.html"
+              aria-selected="true"
+              role="tab"
+              onclick="changeTab(event)"
+              >Inicio</a
+            >
+          </li>
+          <!-- menu desplegable -->
+          <li class="nav-item dropdown" >
+            <a
+              class="nav-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              href="./inventario.html"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="true"
+              onclick="changeTab(event)"
+              >Inventario</a
+            >
+            <div
+              class="dropdown-menu inv"
+              id="dropdown"
+              style="
+                position: absolute;
+                inset: 0px auto auto 0px;
+                margin: 0px;
+                transform: translate(0px, 42px);
+              "
+              data-popper-placement="bottom-start"
+            >
+              <a class="dropdown-item" href="./regional.html">Regionales</a>
+              <a class="dropdown-item" href="./operadores.html">Operador Movil</a>
+              <a class="dropdown-item" href="./equipos.html">Equipos</a>
+              <a class="dropdown-item" href="./colaboradores.html">Colaboradores</a>
+              <a class="dropdown-item" href="./usuarios.html">Usuarios</a>
+            </div>
+          </li>
+          <!-- tab configuracion -->
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              href="./configuracion.html"
+              aria-selected="false"
+              tabindex="-1"
+              role="tab"
+              onclick="changeTab(event)"
+              >Configuracion</a
+            >
+          </li>
+          <!-- Tab tutorial de uso -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              htutoriales.html"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              onclick="changeTab(event)"
+              >Tutorial</a
+            >
+            <div class="dropdown-menu tuto" id="dropdown">
+              <a class="dropdown-item" href="./tutoriales.html#DB">Creacion Base de datos</a>
+              <a class="dropdown-item" href="./tutoriales.html#Inv">Uso del inventario</a>
+              <a class="dropdown-item" href="./tutoriales.html#Registros">Registrar usuario y equipos</a>
+            </div>
+      
+          </li>
+          <div class="card-login card">
+            <div>
+              <span id="user-name"></span>
+              <p class="job" id="user-rol"></p>
+            </div>
+            <button class="btn btn-outline-light">Salir</button>
+          </div>    
+        </ul>
+      </nav>
+    </header>
+
       <!-- contenido de las pestañas -->
       <!-- pestaña inicio -->
       <div id="myTabContent" class="tab-content">
@@ -55,5 +140,5 @@
       </div>
   </body>
   <script src="./renderer.js"></script>
-  <script src="./tabs.js"></script>
+
 </html>
