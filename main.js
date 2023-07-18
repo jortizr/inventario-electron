@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Notification } = require("electron");
+const { app, BrowserWindow, ipcMain, Notification, webContents } = require("electron");
 const path = require("path");
 
 require("electron-reload")(__dirname);
@@ -8,7 +8,6 @@ let rolUser;
 
 //vamos a requerir la conexion a la base de datos
 const { getConnection } = require("./src/database");
-const { log } = require("console");
 let winLogin;
 let mainWindows = null;
 //funcion que crea la vista despues de autenticar
@@ -29,6 +28,7 @@ function createWindow(vista) {
     });
     mainWindows.loadFile(vista);
     mainWindows.webContents.openDevTools();
+
   }
 }
 
@@ -97,7 +97,13 @@ async function dataSesion() {
   return [nameUser, rolUser];
 }
 
+async function loadPag(event, page){
+  console.log(page);
+  return page
+}
+
 app.whenReady().then(() => {
+  ipcMain.handle("load-page", loadPag)
   //canal para autenticar la data del usuario del login.js
   ipcMain.handle("autentication-login", validationLogin);
   //canal que envia los datos del usuario solicitado por tabs.js
@@ -117,3 +123,11 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+function getPage(page){
+  fetch(page)
+  .then(response => response.text())
+  .then(content => {
+    return content;
+  });
+}

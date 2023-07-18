@@ -17,23 +17,19 @@
           <a
             class="nav-link active"
             data-bs-toggle="tab"
-            href="../admin.html"
             aria-selected="true"
             role="tab"
-            onclick="changeTab(event)"
             >Inicio</a
           >
         </li>
         <!-- menu desplegable -->
-        <li class="nav-item dropdown" >
+        <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             data-bs-toggle="dropdown"
-            href="./inventario.html"
             role="button"
             aria-haspopup="true"
             aria-expanded="true"
-            onclick="changeTab(event)"
             >Inventario</a
           >
           <div
@@ -47,22 +43,20 @@
             "
             data-popper-placement="bottom-start"
           >
-            <a class="dropdown-item" href="./regional.html">Regionales</a>
-            <a class="dropdown-item" href="./operadores.html">Operador Movil</a>
-            <a class="dropdown-item" href="./equipos.html">Equipos</a>
-            <a class="dropdown-item" href="./colaboradores.html">Colaboradores</a>
-            <a class="dropdown-item" href="./usuarios.html">Usuarios</a>
+            <a class="dropdown-item" href="#">Regionales</a>
+            <a class="dropdown-item" href="#">Operador Movil</a>
+            <a class="dropdown-item" href="#">Equipos</a>
+            <a class="dropdown-item" href="#">Colaboradores</a>
+            <a class="dropdown-item" href="#">Usuarios</a>
           </div>
         </li>
         <!-- tab configuracion -->
         <li class="nav-item" role="presentation">
           <a
             class="nav-link"
-            href="./configuracion.html"
             aria-selected="false"
             tabindex="-1"
             role="tab"
-            onclick="changeTab(event)"
             >Configuracion</a
           >
         </li>
@@ -71,19 +65,16 @@
           <a
             class="nav-link dropdown-toggle"
             data-bs-toggle="dropdown"
-            htutoriales.html"
             role="button"
             aria-haspopup="true"
             aria-expanded="false"
-            onclick="changeTab(event)"
             >Tutorial</a
           >
           <div class="dropdown-menu tuto" id="dropdown">
-            <a class="dropdown-item" href="./tutoriales.html#DB">Creacion Base de datos</a>
-            <a class="dropdown-item" href="./tutoriales.html#Inv">Uso del inventario</a>
-            <a class="dropdown-item" href="./tutoriales.html#Registros">Registrar usuario y equipos</a>
+            <a class="dropdown-item" href="#DB">Creacion Base de datos</a>
+            <a class="dropdown-item" href="#Inv">Uso del inventario</a>
+            <a class="dropdown-item" href="#Registros">Registrar usuario y equipos</a>
           </div>
-    
         </li>
         <div class="card-login card">
           <div>
@@ -91,35 +82,13 @@
             <p class="job" id="user-rol"></p>
           </div>
           <button class="btn btn-outline-light">Salir</button>
-        </div>    
+        </div>
       </ul>
     </nav>
   </header>
 
       <!-- pestaña inventario  -->
-      <main class="container-fluid">
-        <div class="row">
-      <div
-        class="tab-pane col-md-6 mt-2 p-3 my-auto fade show active"
-        id="consulta"
-        role="tabpanel"
-      >
-          <!-- formulario de consulta -->
-          <form class="card card-body" id="consultaForm">
-            <fieldset>
-              <legend class="offset-1">Consultar Dispositivo</legend>
-              <div class="form-group">
-                <label class="form-label mt-2">Linea</label>
-                <input type="number" class="form-control" id="linea" placeholder="ingrese numero celular">
-                <label class="form-label mt-2">IMEI</label>
-                <input type="number" class="form-control" id="imei" placeholder="ingrese numero IMEI">
-              </div>
-              <button type="submit" class="btn btn-primary mt-1 offset-3">Buscar</button>
-            </fieldset>
-          </form>
-        </div>
-        </div>
-      </main>
+      <main class="container-fluid" id="main-page"></main>
   </body>
   <script src="./renderer.js"></script>
 </html>
