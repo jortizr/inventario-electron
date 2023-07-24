@@ -1,57 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
-    />
-    <title>Registro Regionales</title>
-    <link rel="stylesheet" href="../bootstrap.min.css" />
-  </head>
-  <body>
-    <nav id="menu-container">
-      <ul class="nav nav-tabs" role="tablist" id="tabs"></ul>
-    </nav>
-    <main class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 p-4 my-auto">
-          <!-- product form -->
-          <form class="card card-body m-1 mt-2" id="regionalForm">
-            <fieldset>
-              <legend class="align-txt-center">Registrar Regional</legend>
-              <div class="form-group">
-                <label class="form-label mt-2">Codigo de Regional</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="nameReg"
-                  placeholder="Ingrese el codigo"
-                  required
-                />
-                <label class="form-label mt-2">Nombre de la regional</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="nameReg"
-                  placeholder="Ingrese el nombre"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary mt-1 offset-3">
-                Guardar
-              </button>
-            </fieldset>
-          </form>
-          
+<div class="row">
+  <div class="col-md-6 p-4 my-auto">
+    <!-- product form -->
+    <form class="card card-body m-1 mt-2" id="regionalForm">
+      <fieldset>
+        <legend class="align-txt-center">Registrar Regional</legend>
+        <div class="form-group">
+          <label class="form-label mt-2">Codigo de Regional</label>
+          <input
+            type="number"
+            class="form-control"
+            id="cod-reg"
+            placeholder="Ingrese el codigo"
+            required
+          />
+          <label class="form-label mt-2">Nombre de la regional</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name-reg"
+            placeholder="Ingrese el nombre"
+            required
+          />
         </div>
-        <!-- ista de regionales -->
-        <div class="col-md-6">
-          <div id="regional"></div>
-        </div>
-      </div>
-    </main>
-  </body>
-  <script src="../renderer.js"></script>
-</html>
+        <button id="submit" class="btn btn-primary mt-1 offset-3">
+          Guardar
+        </button>
+      </fieldset>
+    </form>
+  </div>
+</div>

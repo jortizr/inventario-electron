@@ -15,5 +15,6 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld('electronAPI', {
   autheLogin: (user) => ipcRenderer.invoke("autentication-login", user),
   sesion: ()=> ipcRenderer.invoke("data-user"),
-  loadPag: (namePagina)=> ipcRenderer.invoke("load-page", namePagina)
+  loadPag: (namePagina)=> ipcRenderer.sendSync("load-page", namePagina),
+  createReg: (regional)=> ipcRenderer.sendSync("create-regional", regional)
 })

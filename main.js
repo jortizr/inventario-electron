@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, Notification, webContents } = require("electron");
 const path = require("path");
-
+const fs = require('fs');
 require("electron-reload")(__dirname);
 
 let nameUser;
@@ -8,14 +8,15 @@ let rolUser;
 
 //vamos a requerir la conexion a la base de datos
 const { getConnection } = require("./src/database");
+const { waitForDebugger } = require("inspector");
 let winLogin;
 let mainWindows = null;
 //funcion que crea la vista despues de autenticar
 function createWindow(vista) {
-  if (mainWindows) {
-    //si la ventana principal ya existe, recarga la vista
-    mainWindows.loadFile(vista);
-  } else {
+  // if (mainWindows) {
+  //   //si la ventana principal ya existe, recarga la vista
+  //   mainWindows.loadFile(vista);
+  // } else {
     mainWindows = new BrowserWindow({
       width: 850,
       height: 620,
@@ -29,7 +30,7 @@ function createWindow(vista) {
     mainWindows.loadFile(vista);
     mainWindows.webContents.openDevTools();
 
-  }
+  // }
 }
 
 //funcion de la ventana de login
@@ -98,16 +99,46 @@ async function dataSesion() {
 }
 
 async function loadPag(event, page){
-  console.log(page);
-  return page
+  const pageIndex = page.toLowerCase();
+//funcion para leer los nombre de los archivos de las vistas
+  fs.readdir("./src/UI/vistas/", (err, archivos)=>{
+    if(err){
+      console.error(err);
+      return;
+    }
+    //aqui uso la lista
+  const indice = archivos.findIndex((archivo)=> archivo.includes(pageIndex))
+  readHtml(event,archivos[indice])
+  })
+}
+
+async function createRegional(event, regional){
+  try{
+    //se trae la conexion a sql
+    const conn = await getConnection();
+    const result = await conn.query("INSERT INTO regional SET ?", regional)
+    console.log(result);
+
+    new Notification({
+      title: 'Registro Regional',
+      body: 'se guardado exitosamente'
+      }).show();
+
+    event.returnValue = regional;
+  }catch (error){
+    console.log(error);
+  }
 }
 
 app.whenReady().then(() => {
-  ipcMain.handle("load-page", loadPag)
+  ipcMain.on("load-page", loadPag)
   //canal para autenticar la data del usuario del login.js
   ipcMain.handle("autentication-login", validationLogin);
   //canal que envia los datos del usuario solicitado por tabs.js
   ipcMain.handle("data-user", dataSesion);
+  //canal de registro regional
+  ipcMain.on("create-regional", createRegional);
+
   //inicia la ventana de login
   loginWindow();
 
@@ -124,10 +155,18 @@ app.on("window-all-closed", () => {
   }
 });
 
-function getPage(page){
-  fetch(page)
-  .then(response => response.text())
-  .then(content => {
-    return content;
+//funcion para leer el contenido de los html y pasarlo al IpcMain
+function readHtml(event, vista){
+  const rutaVista = "./src/UI/vistas/"+vista;
+  fs.readFile(rutaVista, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    // Envía el código HTML de la vista al proceso de renderizado
+    event.returnValue= data;
   });
 }
+
+
