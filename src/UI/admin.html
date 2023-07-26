@@ -8,85 +8,79 @@
       content="script-src 'self' 'unsafe-inline';"
     />
     <link rel="stylesheet" href="./bootstrap.min.css" />
+    <link rel="stylesheet" href="./animate.css" />
   </head>
   <body>
     <header>
-    <nav id="menu-container">
-      <ul class="nav nav-tabs" role="tablist" id="tabs">
-        <li class="nav-item" role="presentation">
-          <a
-            class="nav-link active"
-            data-bs-toggle="tab"
-            aria-selected="true"
-            role="tab"
-            >Inicio</a
-          >
-        </li>
-        <!-- menu desplegable -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            data-bs-toggle="dropdown"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="true"
-            >Inventario</a
-          >
-          <div
-            class="dropdown-menu inv"
-            id="dropdown"
-            style="
-              position: absolute;
-              inset: 0px auto auto 0px;
-              margin: 0px;
-              transform: translate(0px, 42px);
-            "
-            data-popper-placement="bottom-start"
-          >
-            <a class="dropdown-item" >Regional</a>
-            <a class="dropdown-item" >Operador Movil</a>
-            <a class="dropdown-item" >Equipos</a>
-            <a class="dropdown-item" >Colaboradores</a>
-            <a class="dropdown-item" >Usuarios</a>
+      <nav id="menu-container">
+        <ul class="nav nav-tabs" role="tablist" id="tabs">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              data-bs-toggle="tab"
+              aria-selected="true"
+              role="tab"
+              >Inicio</a
+            >
+          </li>
+          <!-- menu desplegable -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="true"
+              >Inventario</a
+            >
+            <div
+              class="dropdown-menu inv"
+              id="dropdown"
+              style="
+                position: absolute;
+                inset: 0px auto auto 0px;
+                margin: 0px;
+                transform: translate(0px, 42px);
+              "
+              data-popper-placement="bottom-start"
+            >
+              <a class="dropdown-item">Regional</a>
+              <a class="dropdown-item">Operador Movil</a>
+              <a class="dropdown-item">Equipos</a>
+              <a class="dropdown-item">Colaboradores</a>
+              <a class="dropdown-item">Usuarios</a>
+            </div>
+          </li>
+          <!-- tab configuracion -->
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" aria-selected="false" tabindex="-1" role="tab"
+              >Configuracion</a
+            >
+          </li>
+          <!-- Tab tutorial de uso -->
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" aria-selected="false" tabindex="-1" role="tab"
+              >Tutoriales</a
+            >
+          </li>
+          <div class="card-login card">
+            <div>
+              <span id="user-name"></span>
+              <p class="job" id="user-rol"></p>
+            </div>
+            <button class="btn btn-outline-light" id="exit">Salir</button>
           </div>
-        </li>
-        <!-- tab configuracion -->
-        <li class="nav-item" role="presentation">
-          <a
-            class="nav-link"
-            aria-selected="false"
-            tabindex="-1"
-            role="tab"
-            >Configuracion</a
-          >
-        </li>
-        <!-- Tab tutorial de uso -->
-        <li class="nav-item" role="presentation">
-          <a
-            class="nav-link"
-            aria-selected="false"
-            tabindex="-1"
-            role="tab"
-            >Tutoriales</a
-          >
-        </li>
-        <div class="card-login card">
-          <div>
-            <span id="user-name"></span>
-            <p class="job" id="user-rol"></p>
-          </div>
-          <button class="btn btn-outline-light">Salir</button>
-        </div>
-      </ul>
-    </nav>
-  </header>
-      <!-- pestaña inventario  -->
-      <main class="container-fluid" id="main-page">
+        </ul>
+      </nav>
+    </header>
+    <!-- pestaña inventario  -->
+    <main class="container-fluid" id="main-page">
+    </main>
+      <div class="col-md-6">
+        <div id="render">aqui</div>
+      </div>
 
-        <div class="col-md-6">
-          <div id="products"></div>
-        </div>
-      </main>
+    
   </body>
   <script src="./renderer.js"></script>
 </html>

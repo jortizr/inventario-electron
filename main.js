@@ -100,6 +100,7 @@ async function dataSesion() {
 
 async function loadPag(event, page){
   const pageIndex = page.toLowerCase();
+  
 //funcion para leer los nombre de los archivos de las vistas
   fs.readdir("./src/UI/vistas/", (err, archivos)=>{
     if(err){
@@ -130,6 +131,12 @@ async function createRegional(event, regional){
   }
 }
 
+async function getRegional(event){
+  const conn = await getConnection();
+  const result = await conn.query('SELECT * FROM regional ORDER BY idRegional DESC')
+  event.returnValue = result;
+}
+
 app.whenReady().then(() => {
   ipcMain.on("load-page", loadPag)
   //canal para autenticar la data del usuario del login.js
@@ -138,6 +145,8 @@ app.whenReady().then(() => {
   ipcMain.handle("data-user", dataSesion);
   //canal de registro regional
   ipcMain.on("create-regional", createRegional);
+  //traer la lista de regionales
+  ipcMain.on("get-regional", getRegional)
 
   //inicia la ventana de login
   loginWindow();
@@ -154,6 +163,9 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+
+
 
 //funcion para leer el contenido de los html y pasarlo al IpcMain
 function readHtml(event, vista){
