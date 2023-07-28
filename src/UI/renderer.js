@@ -77,9 +77,9 @@ function renderRegional(region) {
   region.forEach((regional) => {
     console.log(regional);
     divRender.innerHTML += `
-      <div class="card card-body my-2 animate__animated animate__fadeInLeft">
-        <h4>${regional.idRegional}</h4>
-        <p>${regional.Nombre_Regional}</p>
+      <div class="card card-body my-1 animate__animated animate__fadeInLeft">
+        <h4>Codigo regional: ${regional.idRegional}</h4>
+        <p>Nombre: ${regional.Nombre_Regional}</p>
         <p>
           <button class="btn btn-danger" onclick="deleteProduct('${regional.id}')">
             DELETE</button>
@@ -110,7 +110,7 @@ document.addEventListener("submit", (e)=>{
 })
 
 //
-document.addEventListener("click", async (e)=>{
+tabs.addEventListener("click", async (e)=>{
   if(tabActive[0].innerText == "Regional"){
     await getRegional();
     console.log("se ejecuto el render");

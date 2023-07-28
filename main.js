@@ -8,15 +8,11 @@ let rolUser;
 
 //vamos a requerir la conexion a la base de datos
 const { getConnection } = require("./src/database");
-const { waitForDebugger } = require("inspector");
+
 let winLogin;
 let mainWindows = null;
 //funcion que crea la vista despues de autenticar
 function createWindow(vista) {
-  // if (mainWindows) {
-  //   //si la ventana principal ya existe, recarga la vista
-  //   mainWindows.loadFile(vista);
-  // } else {
     mainWindows = new BrowserWindow({
       width: 850,
       height: 620,
@@ -50,6 +46,7 @@ function loginWindow() {
 }
 //funcion validar usuario
 async function validationLogin(event, data) {
+  try {
   //se distribuye los datos enviados por el login.js
   const { user, password } = data;
   //se abre la conexion con la BD
@@ -91,6 +88,11 @@ async function validationLogin(event, data) {
       body: "usuario o password equivocado",
     }).show();
   }
+
+  } catch (error) {
+    console.error(error);
+  }
+
 }
 
 //funcion que envia la data del usuario que se autentico
