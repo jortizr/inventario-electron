@@ -74,18 +74,40 @@
       </nav>
     </header>
     <!-- pestaña inventario  -->
-    <main class="container-fluid" >
+    <main class="container-fluid">
       <div class="row">
-        <div class="col-md-6 p-4" id="main-page">
-
-        </div>
+        <div class="col-md-6 p-4" id="main-page"></div>
         <div class="col-md-4">
           <div id="render"></div>
         </div>
       </div>
-
+      <!-- modal ventana de dialogo -->
+      <div class="modal" id="ventanaModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">ERROR</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id="body-modal"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary ms-5" id="btnModal">
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-    
   </body>
   <script src="./renderer.js"></script>
 </html>

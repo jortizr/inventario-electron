@@ -7,11 +7,14 @@ const mainPage = document.getElementById("main-page")
 const tabs = document.getElementById("tabs")
 const dropdownItem = document.getElementsByClassName("dropdown-item")
 const divRender = document.getElementById("render")
+const modal = document.getElementById("ventanaModal")
+const btnModal = document.getElementById("btnModal")
+const msjModal = document.getElementById("body-modal")
 
-
+let editingStatus = false;
 let regionals =[];
 let tabActive = tabs.getElementsByClassName("active");
-console.log(dropdownItem[0].classList);
+
 //funcion para cambiar de tab
 tabs.addEventListener("click", (e)=>{
     e.preventDefault();
@@ -75,15 +78,14 @@ function renderRegional(region) {
   
   //recorremos el array y lo pitamos en el html
   region.forEach((regional) => {
-    console.log(regional);
     divRender.innerHTML += `
       <div class="card card-body my-1 animate__animated animate__fadeInLeft">
         <h4>Codigo regional: ${regional.idRegional}</h4>
-        <p>Nombre: ${regional.Nombre_Regional}</p>
+        <p><strong>Nombre:</strong> ${regional.Nombre_Regional}</p>
         <p>
-          <button class="btn btn-danger" onclick="deleteProduct('${regional.id}')">
+          <button class="btn btn-danger" onclick="deleteRegional('${regional.idRegional}')">
             DELETE</button>
-          <button class="btn btn-secondary" onclick="editProduct('${regional.id}')">EDITAR</button>
+          <button class="btn btn-secondary" onclick="editRegional('${regional.idRegional}')">EDITAR</button>
         </p>
       </div>
     `;
@@ -101,11 +103,21 @@ document.addEventListener("submit", (e)=>{
   e.preventDefault()
   const regionalID = document.getElementById("cod-reg");
   const regionalName = document.getElementById("name-reg");
+  const formReg = document.getElementById("regionalForm")
+  //este if se activa segun el tab activo
   if(tabActive[0].innerText == "Regional"){
-    const formReg = document.getElementById("regionalForm")
-    regRegional(regionalID, regionalName)
-    formReg.reset();
-    regionalID.focus()
+    //si no esta editando entra en el if
+    if(!editingStatus){
+      regRegional(regionalID, regionalName)
+      formReg.reset();
+      regionalID.focus()
+      getRegional()
+    }else{
+      //await window.electronAPI.updateRegional(data)
+
+      editingStatus = false;
+      document.getElementById("cod-reg").disabled = false;
+    }
   }
 })
 
@@ -113,7 +125,6 @@ document.addEventListener("submit", (e)=>{
 tabs.addEventListener("click", async (e)=>{
   if(tabActive[0].innerText == "Regional"){
     await getRegional();
-    console.log("se ejecuto el render");
   }
 })
 
@@ -127,15 +138,31 @@ if(tabActive[0].innerText == "Inicio"){
 }
 
 
-
-
 //funcion para registrar la regional
 async function regRegional(id, nameReg){
   const regional ={
     idRegional: id.value,
     Nombre_Regional: nameReg.value
   }
-  await window.electronAPI.createReg(regional);
+  const resp = await window.electronAPI.createReg(regional);
+  const msj = resp.toString()
+
+  if (msj.includes("ER_DUP_ENTRY")) {
+    modal.style.display = "block"
+    msjModal.textContent = "Esta regional ya existe"
+  }
+
+
+}
+
+//funcion para editar regional
+async function editRegional(id){
+  id = parseInt(id)
+  let indice =regionals.findIndex((elemento)=> elemento.idRegional === id)
+  document.getElementById("cod-reg").value = regionals[indice].idRegional;
+  document.getElementById("name-reg").value = regionals[indice].Nombre_Regional;
+  document.getElementById("cod-reg").disabled = true
+  editingStatus = true;
 }
 
 
@@ -144,11 +171,13 @@ async function regRegional(id, nameReg){
 
 
 
-//!2da forma
-// document.addEventListener('submit', (e) => {
-//   const regionalForm = document.getElementById('tuFormularioId');
-//   if (e.target === regionalForm) {
-//     e.preventDefault();
-//     // Tu lógica de manejo del formulario aquí
-//   }
-// });
+
+function deleteID(id){
+
+}
+
+btnModal.addEventListener("click", (e)=>{
+  modal.style.display = "none";
+  msjModal.textContent = "";
+  document.getElementById("cod-reg").focus()
+})

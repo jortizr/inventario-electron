@@ -25,9 +25,28 @@ function createWindow(vista) {
     });
     mainWindows.loadFile(vista);
     mainWindows.webContents.openDevTools();
-
   // }
 }
+
+function modalWin(){
+  const modal = new BrowserWindow({
+    width: 351,
+    height: 132,
+    minWidth: 350,
+    minHeight: 132,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: path.join(__dirname, "./src/preload.js"),
+    },
+    frame: false,
+  });
+  modal.setMenu(null);
+  modal.loadFile("./src/UI/messages.html");
+  modal.webContents.openDevTools();
+}
+
+
+
 
 //funcion de la ventana de login
 function loginWindow() {
@@ -120,16 +139,15 @@ async function createRegional(event, regional){
     //se trae la conexion a sql
     const conn = await getConnection();
     const result = await conn.query("INSERT INTO regional SET ?", regional)
-    console.log(result);
 
     new Notification({
       title: 'Registro Regional',
       body: 'se guardado exitosamente'
       }).show();
 
-    event.returnValue = regional;
+    event.returnValue= result;
   }catch (error){
-    console.log(error);
+    event.returnValue=error;
   }
 }
 
@@ -137,6 +155,11 @@ async function getRegional(event){
   const conn = await getConnection();
   const result = await conn.query('SELECT * FROM regional ORDER BY idRegional DESC')
   event.returnValue = result;
+}
+
+async function updateRegional(event, regional){
+  console.log(regional);
+
 }
 
 app.whenReady().then(() => {
@@ -148,7 +171,10 @@ app.whenReady().then(() => {
   //canal de registro regional
   ipcMain.on("create-regional", createRegional);
   //traer la lista de regionales
-  ipcMain.on("get-regional", getRegional)
+  ipcMain.on("get-regional", getRegional);
+  //canal de update regional
+  ipcMain.on("update-regional", updateRegional)
+
 
   //inicia la ventana de login
   loginWindow();
