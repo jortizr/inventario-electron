@@ -1,49 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
-    />
-    <title>Registro Regionales</title>
-    <link rel="stylesheet" href="../bootstrap.min.css" />
-  </head>
-  <body>
-    <nav id="menu-container">
-      <ul class="nav nav-tabs" role="tablist" id="tabs"></ul>
-    </nav>
-    <main class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 p-4 my-auto">
-          <!-- product form -->
-          <form class="card card-body m-1 mt-2" id="regionalForm">
-            <fieldset>
-              <legend class="align-txt-center">Registrar Usuario</legend>
-              <div class="form-group">
-                <label class="form-label mt-2">cedula</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="nameReg"
-                  placeholder="Ingrese la cedula "
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary mt-1 offset-3">
-                Guardar
-              </button>
-            </fieldset>
-          </form>
-          
+    <!-- product form -->
+    <form class="card card-body" id="regionalForm">
+      <fieldset>
+        <legend class="text-center">Registrar Usuarios</legend>
+        <div class="form-group">
+          <label class="form-label mt-2">Codigo nomina</label>
+          <input
+            type="number"
+            class="form-control"
+            id="cod-reg"
+            placeholder="Ingrese el codigo"
+            required
+          />
+          <label class="form-label mt-2">Nombre completo</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name-reg"
+            placeholder="Ingrese el nombre"
+            required
+          />
         </div>
-        <!-- ista de regionales -->
-        <div class="col-md-6">
-          <div id="usuarios"></div>
+        <div class="text-center">
+          <button id="submit" class="btn btn-primary mt-1">
+            Guardar
+          </button>
         </div>
-      </div>
-    </main>
-  </body>
-  <script src="../renderer.js"></script>
-</html>
+      </fieldset>
+    </form>

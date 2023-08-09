@@ -1,17 +1,30 @@
-        <div class="row">
-          <div class="col-md-6 p-4 my-auto">
-            <!-- product form -->
-            <form class="card card-body" id="">
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="name"
-                  placeholder=""
-                  class="form-control"
-                  autofocus
-                />
-              </div>
-              <button id="submit" class="btn btn-success">Grabar</button>
-            </form>
-          </div>
+    <!-- product form -->
+    <form class="card card-body" id="regionalForm">
+      <fieldset class="justify-content-center align-items-center">
+        <legend class="align-txt-center">Registrar Operador Movil</legend>
+        <div class="form-group justify-content-center align-items-center">
+          <label class="form-label mt-2">Codigo de Regional</label>
+          <input
+            type="number"
+            class="form-control"
+            id="cod-reg"
+            placeholder="Ingrese el codigo"
+            required
+          />
+          <label class="form-label mt-2">Nombre de la regional</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name-reg"
+            placeholder="Ingrese el nombre"
+            required
+          />
         </div>
+        <div class="text-center">
+          <button id="submit" class="btn btn-primary mt-1">
+            Guardar
+          </button>
+        </div>
+          
+      </fieldset>
+    </form>

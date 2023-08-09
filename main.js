@@ -22,29 +22,13 @@ function createWindow(vista) {
         nodeIntegration: true,
         preload: path.join(__dirname, "./src/preload.js"),
       },
+      //frame: false,
     });
     mainWindows.loadFile(vista);
     mainWindows.webContents.openDevTools();
+    //modal.setMenu(null);
   // }
 }
-
-function modalWin(){
-  const modal = new BrowserWindow({
-    width: 351,
-    height: 132,
-    minWidth: 350,
-    minHeight: 132,
-    webPreferences: {
-      nodeIntegration: true,
-      preload: path.join(__dirname, "./src/preload.js"),
-    },
-    frame: false,
-  });
-  modal.setMenu(null);
-  modal.loadFile("./src/UI/messages.html");
-  modal.webContents.openDevTools();
-}
-
 
 
 

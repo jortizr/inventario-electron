@@ -1,43 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
-    />
-    <title>Registrar Colaboradores</title>
-    <link rel="stylesheet" href="../bootstrap.min.css" />
-  </head>
-  <body>
-    <nav id="menu-container">
-      <ul class="nav nav-tabs" role="tablist" id="tabs"></ul>
-    </nav>
-    
-    <main class="container-fluid">
-        <div class="row">
-          <div class="col-md-6 p-4 my-auto">
-            <!-- product form -->
-            <form class="card card-body" id="">
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="name"
-                  placeholder=""
-                  class="form-control"
-                  autofocus
-                />
-              </div>
-              <button id="submit" class="btn btn-success">Grabar</button>
-            </form>
-          </div>
-          <div class="col-md-6">
-            <div id=""></div>
-          </div>
+    <!-- product form -->
+    <form class="card card-body" id="regionalForm">
+      <fieldset>
+        <legend class="text-center">Registrar Colaborador</legend>
+        <div class="form-group">
+          <label class="form-label mt-2">Codigo nomina</label>
+          <input
+            type="number"
+            class="form-control"
+            id="cod-reg"
+            placeholder="Ingrese el codigo"
+            required
+          />
+          <label class="form-label mt-2">Nombre completo</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name-reg"
+            placeholder="Ingrese el nombre"
+            required
+          />
         </div>
-      </main>
-    </body>
-    <script src="../renderer.js"></script>
-  </html>
-  
+        <div class="text-center">
+          <button id="submit" class="btn btn-primary mt-1">
+            Guardar
+          </button>
+        </div>
+      </fieldset>
+    </form>

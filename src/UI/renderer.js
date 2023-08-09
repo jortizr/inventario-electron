@@ -25,6 +25,7 @@ tabs.addEventListener("click", (e)=>{
     e.target.classList.add("active");
     e.target.ariaSelected = "true";
     loadPag(e.target.innerText);
+    divRender.innerHTML = ""
 })
 
 //funcion para desactivar los botones si otro esta activo
