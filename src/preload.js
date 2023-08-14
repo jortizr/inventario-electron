@@ -7,8 +7,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   loadPag: (namePagina)=> ipcRenderer.sendSync("load-page", namePagina),
   createReg: (regional)=> ipcRenderer.sendSync("create-regional", regional),
   getRegional: () => ipcRenderer.sendSync("get-regional"), 
-  updateRegional: (regional)=> ipcRenderer.send("update-regional", regional),
+  updateRegional: (regional, id)=> ipcRenderer.send("update-regional", regional, id),
   messajeError: (msj) => ipcRenderer.send("messaje", msj),
-
-
 })

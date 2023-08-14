@@ -12,6 +12,7 @@ const btnModal = document.getElementById("btnModal")
 const msjModal = document.getElementById("body-modal")
 
 let editingStatus = false;
+let editData =[];
 let regionals =[];
 let tabActive = tabs.getElementsByClassName("active");
 
@@ -100,7 +101,7 @@ const getRegional = async () => {
   console.log(divRender);
 };
 //eventos de los formularios cargados
-document.addEventListener("submit", (e)=>{
+document.addEventListener("submit", async (e)=>{
   e.preventDefault()
   const regionalID = document.getElementById("cod-reg");
   const regionalName = document.getElementById("name-reg");
@@ -114,10 +115,13 @@ document.addEventListener("submit", (e)=>{
       regionalID.focus()
       getRegional()
     }else{
-      //await window.electronAPI.updateRegional(data)
-
+      const id = +regionalID.value
+      const regEdit = {Nombre_Regional: regionalName.value}
+      await window.electronAPI.updateRegional(regEdit, id)
       editingStatus = false;
       document.getElementById("cod-reg").disabled = false;
+      getRegional()
+      document.getElementById("regionalForm").reset();
     }
   }
 })
