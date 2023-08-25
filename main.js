@@ -141,6 +141,20 @@ async function createRegional(event, regional) {
   }
 }
 
+async function deleteRegional(event, id){
+  try {
+    const conn = await getConnection();
+    const result = await conn.query('DELETE FROM regional WHERE idRegional= ?', id)
+    new Notification({
+      title: "Notificacion",
+      body: "registro eliminado",
+    }).show();
+    event.returnValue = result;
+  } catch (error) {
+    console.log("se produjo un error al eliminar: \n"+error);
+  }
+}
+
 async function getRegional(event) {
   const conn = await getConnection();
   const result = await conn.query(
@@ -177,6 +191,8 @@ app.whenReady().then(() => {
   ipcMain.on("get-regional", getRegional);
   //canal de update regional
   ipcMain.on("update-regional", updateRegional);
+  //borrar registros
+  ipcMain.on("delete-data", deleteRegional)
 
   //inicia la ventana de login
   loginWindow();

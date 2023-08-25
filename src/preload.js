@@ -9,4 +9,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getRegional: () => ipcRenderer.sendSync("get-regional"), 
   updateRegional: (regional, id)=> ipcRenderer.send("update-regional", regional, id),
   messajeError: (msj) => ipcRenderer.send("messaje", msj),
+  deleteRG: (id)=> ipcRenderer.sendSync("delete-data", id)
 })

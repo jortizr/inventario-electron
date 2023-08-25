@@ -8,12 +8,15 @@ const tabs = document.getElementById("tabs")
 const dropdownItem = document.getElementsByClassName("dropdown-item")
 const divRender = document.getElementById("render")
 const modal = document.getElementById("ventanaModal")
-const btnModal = document.getElementById("btnModal")
+const btnModalClose = document.getElementById("btnModal")
 const msjModal = document.getElementById("body-modal")
+const btnModalSave = document.getElementById("btnModalSave")
+
 
 let editingStatus = false;
 let editData =[];
 let regionals =[];
+let idDel=[];
 let tabActive = tabs.getElementsByClassName("active");
 
 //funcion para cambiar de tab
@@ -85,7 +88,7 @@ function renderRegional(region) {
         <h4>Codigo regional: ${regional.idRegional}</h4>
         <p><strong>Nombre:</strong> ${regional.Nombre_Regional}</p>
         <p>
-          <button class="btn btn-danger" onclick="deleteRegional('${regional.idRegional}')">
+          <button class="btn btn-danger" onclick="deleteReg('${regional.idRegional}')">
             DELETE</button>
           <button class="btn btn-secondary" onclick="editRegional('${regional.idRegional}')">EDITAR</button>
         </p>
@@ -170,19 +173,46 @@ async function editRegional(id){
   editingStatus = true;
 }
 
-
-
-
-
-
-
-
-function deleteID(id){
-
+async function deleteReg(id){
+  // idDel=id;
+  const respuesta = await mostrarModal("inline-block", "¿Estas seguro de eliminar el registro?");
+  if (respuesta) {
+    const resp= await window.electronAPI.deleteRG(id)
+    console.log(resp.affectedRows);
+    getRegional()
+    // Aquí ejecutas tu otra línea de código si el usuario aceptó.
+  } else {
+    console.log('Usuario cerró.');
+    // Aquí ejecutas otra acción si el usuario cerró.
+  }
 }
 
-btnModal.addEventListener("click", (e)=>{
-  modal.style.display = "none";
-  msjModal.textContent = "";
-  document.getElementById("cod-reg").focus()
-})
+
+
+//oculta el boton por defecto
+btnModalSave.style.display = "none"
+
+
+
+//funcion para mostrar el modal y esperar una respuesta true
+function mostrarModal(onBtnModalSave, mensaje){
+  btnModalSave.style.display= onBtnModalSave;
+  modal.style.display = "block"
+  msjModal.textContent = mensaje;
+
+  return new Promise((resolve, reject)=>{
+    btnModalSave.onclick =()=>{
+      modal.style.display = "none";
+      msjModal.textContent = "";
+      btnModalSave.style.display = "none"
+      resolve(true);
+    };
+
+    btnModalClose.onclick = ()=>{
+      modal.style.display = "none";
+      msjModal.textContent = "";
+      btnModalSave.style.display = "none"
+      resolve(false);
+    };
+  });
+}
