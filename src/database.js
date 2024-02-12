@@ -14,6 +14,7 @@ let connection = null;
 
 //funcion para conectar a la base de datos con reintentos
 async function connectToDB(){
+    
     try {
         if(connection && connection.state !== "disconnected"){
             return connection;
