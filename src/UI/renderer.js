@@ -30,10 +30,10 @@ tabs.addEventListener("click", (e)=>{
       //agrega a los nav-link el active y selected
       e.target.classList.add("active");
       e.target.ariaSelected = "true";
-      if(e.target.innerText != undefined){
+      //carga la pagina 
        loadPag(e.target.innerText);
        divRender.innerHTML = ""
-      }
+      
       
     } catch (e) {
       console.log("este es el error: "+e);
@@ -81,7 +81,6 @@ async function dataSesion(){
 dataSesion();
 //carga las paginas desde el main
 async function loadPag(namePagina){
-  console.log("este es el contenido del nombre de la pagina"+ namePagina);
   const page = await window.electronAPI.loadPag(namePagina)
   document.getElementById("main-page").innerHTML = page;
 }
