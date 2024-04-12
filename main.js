@@ -8,6 +8,7 @@ const {
 const path = require("path");
 const fs = require("fs");
 require("electron-reload")(__dirname);
+const {createRegister} = require("./src/modulos/metodos-main/create");
 
 let nameUser;
 let rolUser;
@@ -128,21 +129,9 @@ async function loadPag(event, page) {
   });
 }
 
+
 async function createRegional(event, regional) {
-  try {
-    //se trae la conexion a sql
-    const conn = await getConnection();
-    const result = await conn.query("INSERT INTO regional SET ?", regional);
-
-    new Notification({
-      title: "Registro Regional",
-      body: "se guardado exitosamente",
-    }).show();
-
-    event.returnValue = result;
-  } catch (error) {
-    event.returnValue = error;
-  }
+  createRegister(event, regional, "regional", "Registro de Regional");
 }
 
 async function deleteRegional(event, id){

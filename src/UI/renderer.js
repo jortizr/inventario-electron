@@ -122,6 +122,7 @@ document.addEventListener("submit", async (e)=>{
   if(tabActive[0].innerText == "Regional"){
     //si no esta editando entra en el if
     if(!editingStatus){
+      //registra las regionales
       regRegional(regionalID, regionalName)
       formReg.reset();
       regionalID.focus()
