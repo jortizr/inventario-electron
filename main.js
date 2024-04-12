@@ -1,10 +1,8 @@
-const {
-  app,
-  BrowserWindow,
-  ipcMain,
-  Notification,
-  webContents,
-} = require("electron");
+const {createRegional, deleteRegional, getRegional} = require('./src/modulos/regionalQueries')
+const {loadPag} = require("./src/modulos/loadingPage")
+const {createWindow} = require("./src/modulos/createWindow")
+const {validationLogin, loginWindow} = require("./src/modulos/loginValidate")
+const {app,BrowserWindow,ipcMain, Notification, webContents} = require("electron");
 const path = require("path");
 const fs = require("fs");
 require("electron-reload")(__dirname);
@@ -19,95 +17,13 @@ const { getConnection } = require("./src/database");
 let winLogin;
 let mainWindows = null;
 //funcion que crea la vista despues de autenticar
-function createWindow(vista) {
-  mainWindows = new BrowserWindow({
-    width: 850,
-    height: 620,
-    minWidth: 800,
-    minHeight: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      preload: path.join(__dirname, "./src/preload.js"),
-    },
-    //frame: false,
-  });
-  mainWindows.loadFile(vista);
-  mainWindows.webContents.openDevTools();
-  //modal.setMenu(null);
-  // }
-}
 
-//funcion de la ventana de login
-function loginWindow() {
-  winLogin = new BrowserWindow({
-    width: 850,
-    height: 620,
-    minWidth: 800,
-    minHeight: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      preload: path.join(__dirname, "./src/preload.js"),
-    },
-  });
-  winLogin.loadFile("./src/UI/login.html");
-  winLogin.webContents.openDevTools();
-}
-//funcion validar usuario
-async function validationLogin(event, data) {
-  try {
-    //se distribuye los datos enviados por el login.js
-    const { user, password } = data;
-    //se abre la conexion con la BD
-    const conn = await getConnection();
-    //se realiza la consulta del usuario y se le pasa la data
-    const login = await conn.query(
-      "SELECT * FROM user WHERE idUser=? AND password=?",
-      [user, password]
-    );
 
-    //valida si la consulta tiene una respuesta con data, si es 1
-    //es porque si hubo informacion de lo contrario no existe
-    if (login.length > 0) {
-      winLogin.close();
-      new Notification({
-        title: "Bienvenido " + login[0].Nombre_Completo,
-        body: "Iniciaste sesion existosamente",
-      }).show();
-      //segun el rol del usuario abre la ventana con el html especifico
-      if (login[0].IDRol === 3) {
-        //rol de administrador
-        createWindow("./src/UI/admin.html");
-      }
-      if (
-        login[0].IDRol === 1 ||
-        login[0].IDRol === 2 ||
-        login[0].IDRol === 4
-      ) {
-        //coordinador y gerencia son iguales
-        createWindow("./src/UI/index.html");
-      }
 
-      //consulta el rol del usuario para mostrarlo en el menu tabs.html
-      const tipoRol = await conn.query(
-        "SELECT Nombre_Rol FROM rol WHERE idRol=?",
-        login[0].IDRol
-      );
-      nameUser = login[0].Nombre_Completo;
-      rolUser = tipoRol[0].Nombre_Rol;
-    } else {
-      new Notification({
-        title: "ERROR!!",
-        body: "usuario o password equivocado",
-      }).show();
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 //funcion que envia la data del usuario que se autentico
 async function dataSesion() {
-  return [nameUser, rolUser];
+  return [nameUser, rolUser]; 
 }
 
 async function loadPag(event, page) {
@@ -129,9 +45,21 @@ async function loadPag(event, page) {
   });
 }
 
-
 async function createRegional(event, regional) {
-  createRegister(event, regional, "regional", "Registro de Regional");
+  try {
+    //se trae la conexion a sql
+    const conn = await getConnection();
+    const result = await conn.query("INSERT INTO regional SET ?", regional);
+
+    new Notification({
+      title: "Registro Regional",
+      body: "se guardado exitosamente",
+    }).show();
+
+    event.returnValue = result;
+  } catch (error) {
+    event.returnValue = error;
+  }
 }
 
 async function deleteRegional(event, id){
@@ -173,19 +101,20 @@ async function updateRegional(event, regional, id) {
 }
 
 app.whenReady().then(() => {
-  ipcMain.on("load-page", loadPag);
+  ipcMain.on("load-page", (event, page)=>{loadPag(event, page)});
   //canal para autenticar la data del usuario del login.js
-  ipcMain.handle("autentication-login", validationLogin);
+  ipcMain.handle("autentication-login", (event, data, nameUser, rolUser, winLogin)=>
+  {validationLogin(event, data, nameUser, rolUser, winLogin)});
   //canal que envia los datos del usuario solicitado por tabs.js
   ipcMain.handle("data-user", dataSesion);
   //canal de registro regional
-  ipcMain.on("create-regional", createRegional);
+  ipcMain.on("create-regional", (event, regional) => {createRegional(event, regional)});
   //traer la lista de regionales
-  ipcMain.on("get-regional", getRegional);
+  ipcMain.on("get-regional", (event)=>{getRegional(event)});
   //canal de update regional
-  ipcMain.on("update-regional", updateRegional);
+  ipcMain.on("update-regional", (event, regional, id)=>{updateRegional(event, regional, id)});
   //borrar registros
-  ipcMain.on("delete-data", deleteRegional)
+  ipcMain.on("delete-data", (event, id)=>{deleteRegional(event, id)})
 
   //inicia la ventana de login
   loginWindow();
