@@ -1,3 +1,4 @@
+
 const mainContent = document.getElementsByClassName("container-fluid");
 const tabList = document.getElementsByClassName("nav-link");
 const listDrop = document.getElementsByClassName("dropdown-menu")
@@ -33,10 +34,8 @@ tabs.addEventListener("click", (e)=>{
       //carga la pagina 
        loadPag(e.target.innerText);
        divRender.innerHTML = ""
-      
-      
     } catch (e) {
-      console.log("este es el error: "+e);
+      console.log("este es el error: "+ e);
     }
     
 })
@@ -106,6 +105,45 @@ function renderRegional(region) {
   });
 }
 
+
+async function regRegional(id, nameReg){
+  const regional ={
+    idRegional: id.value,
+    Nombre_Regional: nameReg.value
+  }
+  const resp = await window.electronAPI.createReg(regional);
+  const msj = resp.toString()
+
+  if (msj.includes("ER_DUP_ENTRY")) {
+    modal.style.display = "block"
+    msjModal.textContent = "Esta regional ya existe"
+  }
+}
+
+
+async function editRegional(id){
+  id = parseInt(id)
+  let indice =regionals.findIndex((elemento)=> elemento.idRegional === id)
+  document.getElementById("cod-reg").value = regionals[indice].idRegional;
+  document.getElementById("name-reg").value = regionals[indice].Nombre_Regional;
+  document.getElementById("cod-reg").disabled = true
+  editingStatus = true;
+}
+
+async function deleteReg(id){
+  // idDel=id;
+  const respuesta = await mostrarModal("inline-block", "¿Estas seguro de eliminar el registro?");
+  if (respuesta) {
+    const resp= await window.electronAPI.deleteRG(id)
+    console.log(resp.affectedRows);
+    getRegional()
+    // Aquí ejecutas tu otra línea de código si el usuario aceptó.
+  } else {
+    console.log('Usuario cerró.');
+    // Aquí ejecutas otra acción si el usuario cerró.
+  }
+}
+
 //funcion para traer los datos guardados
 const getRegional = async () => {
   regionals = await window.electronAPI.getRegional();
@@ -115,14 +153,16 @@ const getRegional = async () => {
 //eventos de los formularios cargados
 document.addEventListener("submit", async (e)=>{
   e.preventDefault()
-  const regionalID = document.getElementById("cod-reg");
-  const regionalName = document.getElementById("name-reg");
-  const formReg = document.getElementById("regionalForm")
+
   //este if se activa segun el tab activo
   if(tabActive[0].innerText == "Regional"){
     //si no esta editando entra en el if
     if(!editingStatus){
       //registra las regionales
+      const regionalID = document.getElementById("cod-reg");
+      const regionalName = document.getElementById("name-reg");
+      const formReg = document.getElementById("regionalForm");
+
       regRegional(regionalID, regionalName)
       formReg.reset();
       regionalID.focus()
@@ -157,52 +197,17 @@ if(tabActive[0].innerText == "Inicio"){
 
 
 //funcion para registrar la regional
-async function regRegional(id, nameReg){
-  const regional ={
-    idRegional: id.value,
-    Nombre_Regional: nameReg.value
-  }
-  const resp = await window.electronAPI.createReg(regional);
-  const msj = resp.toString()
 
-  if (msj.includes("ER_DUP_ENTRY")) {
-    modal.style.display = "block"
-    msjModal.textContent = "Esta regional ya existe"
-  }
-
-
-}
 
 //funcion para editar regional
-async function editRegional(id){
-  id = parseInt(id)
-  let indice =regionals.findIndex((elemento)=> elemento.idRegional === id)
-  document.getElementById("cod-reg").value = regionals[indice].idRegional;
-  document.getElementById("name-reg").value = regionals[indice].Nombre_Regional;
-  document.getElementById("cod-reg").disabled = true
-  editingStatus = true;
-}
 
-async function deleteReg(id){
-  // idDel=id;
-  const respuesta = await mostrarModal("inline-block", "¿Estas seguro de eliminar el registro?");
-  if (respuesta) {
-    const resp= await window.electronAPI.deleteRG(id)
-    console.log(resp.affectedRows);
-    getRegional()
-    // Aquí ejecutas tu otra línea de código si el usuario aceptó.
-  } else {
-    console.log('Usuario cerró.');
-    // Aquí ejecutas otra acción si el usuario cerró.
-  }
-}
+
+
 
 
 
 //oculta el boton por defecto
 btnModalSave.style.display = "none"
-
-
 
 //funcion para mostrar el modal y esperar una respuesta true
 function mostrarModal(onBtnModalSave, mensaje){
