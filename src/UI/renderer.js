@@ -21,9 +21,8 @@ let tabActive = tabs.getElementsByClassName("active");
 
 //funcion para cambiar de tab
 tabs.addEventListener("click", (e)=>{
-    const {desactiveSelect} = require("../modulos/metodos-render/desactiveSelect.js");
+  
     try {
-      
       e.preventDefault();
       // Quitar la clase "active" de todas las pestañas
       desactiveSelect(tabList);
@@ -41,6 +40,23 @@ tabs.addEventListener("click", (e)=>{
 })
 
 
+async function dataSesion(username, rol) {
+  try {
+      const sesion = await window.electronAPI.sesion();
+      document.getElementById(username).textContent = sesion[0];
+      document.getElementById(rol).textContent = sesion[1];
+      return console.log(sesion); 
+  } catch (error) {
+      console.error('Error al cargar los datos de la sesión:', error);
+  }
+}
+
+function desactiveSelect(elemento){
+  for (var i = 0; i < elemento.length; i++) {
+    elemento[i].classList.remove("active");
+    elemento[i].ariaSelected = "false";
+  }
+}
 
 //funcion cuando el menu recibe el mouse y activar el desplegable
 tabs.addEventListener("mouseover", (e)=>{
@@ -66,12 +82,8 @@ mainPage.addEventListener("mouseout", (e)=>{
       }
 })
 //datos de usuario
-async function dataSesion(){
-    const sesion = await window.electronAPI.sesion()
-    document.getElementById("user-name").textContent = sesion[0];
-    document.getElementById("user-rol").textContent = sesion[1];
-}
-dataSesion();
+
+
 //carga las paginas desde el main
 async function loadPag(namePagina){
   const page = await window.electronAPI.loadPag(namePagina)
@@ -136,6 +148,9 @@ const getRegional = async () => {
 //eventos de los formularios cargados
 document.addEventListener("submit", async (e)=>{
   e.preventDefault()
+
+  const {dataSesion} = require("../modulos/metodos-render/sesion.js")
+  dataSesion("user-name","user-rol");
 
   //este if se activa segun el tab activo
   if(tabActive[0].innerText == "Regional"){
