@@ -1,4 +1,6 @@
 
+
+
 const mainContent = document.getElementsByClassName("container-fluid");
 const tabList = document.getElementsByClassName("nav-link");
 const listDrop = document.getElementsByClassName("dropdown-menu")
@@ -22,6 +24,7 @@ let tabActive = tabs.getElementsByClassName("active");
 
 //funcion para cambiar de tab
 tabs.addEventListener("click", (e)=>{
+    const {desactiveSelect} = require("../modulos/metodos-render/desactiveSelect.js");
     try {
       
       e.preventDefault();
@@ -40,13 +43,7 @@ tabs.addEventListener("click", (e)=>{
     
 })
 
-//funcion para desactivar los botones si otro esta activo
-function desactiveSelect(elemento){
-  for (var i = 0; i < elemento.length; i++) {
-    elemento[i].classList.remove("active");
-    elemento[i].ariaSelected = "false";
-  }
-}
+
 
 //funcion cuando el menu recibe el mouse y activar el desplegable
 tabs.addEventListener("mouseover", (e)=>{
@@ -91,6 +88,7 @@ function renderRegional(region) {
   
   //recorremos el array y lo pitamos en el html
   region.forEach((regional) => {
+    const {deleteReg} = require("../modulos/metodos-render/Regional.js");
     divRender.innerHTML += `
       <div class="card card-body my-1 animate__animated animate__fadeInLeft">
         <h4>Codigo regional: ${regional.idRegional}</h4>
@@ -130,19 +128,7 @@ async function editRegional(id){
   editingStatus = true;
 }
 
-async function deleteReg(id){
-  // idDel=id;
-  const respuesta = await mostrarModal("inline-block", "¿Estas seguro de eliminar el registro?");
-  if (respuesta) {
-    const resp= await window.electronAPI.deleteRG(id)
-    console.log(resp.affectedRows);
-    getRegional()
-    // Aquí ejecutas tu otra línea de código si el usuario aceptó.
-  } else {
-    console.log('Usuario cerró.');
-    // Aquí ejecutas otra acción si el usuario cerró.
-  }
-}
+
 
 //funcion para traer los datos guardados
 const getRegional = async () => {
