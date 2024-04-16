@@ -1,6 +1,3 @@
-
-
-
 const mainContent = document.getElementsByClassName("container-fluid");
 const tabList = document.getElementsByClassName("nav-link");
 const listDrop = document.getElementsByClassName("dropdown-menu")
