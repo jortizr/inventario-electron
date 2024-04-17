@@ -1,0 +1,26 @@
+Primero, añade un identificador al enlace "Inventario" para poder referenciarlo fácilmente:
+
+html
+
+<a id="inventarioDropdown" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Inventario</a>
+
+Luego, puedes agregar un evento mouseover al enlace "Inventario" para mostrar el menú desplegable cuando el usuario pasa el mouse sobre él:
+
+javascript
+
+document.addEventListener("DOMContentLoaded", function() {
+    const inventarioDropdown = document.getElementById("inventarioDropdown");
+    const dropdownMenu = document.querySelector(".dropdown-menu.inv");
+
+    inventarioDropdown.addEventListener("mouseover", function() {
+        dropdownMenu.classList.add("active");
+    });
+
+    inventarioDropdown.addEventListener("mouseout", function() {
+        dropdownMenu.classList.remove("active");
+    });
+});
+
+En este código, estamos seleccionando el enlace "Inventario" por su identificador y el menú desplegable por su clase. Luego, añadimos un evento mouseover al enlace "Inventario" para agregar la clase "show" al menú desplegable cuando el usuario pasa el mouse sobre él. También añadimos un evento mouseout para quitar la clase "show" cuando el mouse sale del enlace "Inventario".
+
+Con estos cambios, el menú desplegable debería aparecer cuando el usuario pasa el mouse sobre el enlace "Inventario". Asegúrate de que estás incluyendo este código después de que se cargue el DOM para que pueda funcionar correctamente.
